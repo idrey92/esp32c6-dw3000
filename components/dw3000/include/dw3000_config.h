@@ -1,0 +1,15 @@
+#pragma once
+
+#include "driver/gpio.h"
+
+#define DW3000_SPI_HOST SPI2_HOST
+
+#define DW3000_PIN_SCK GPIO_NUM_6
+#define DW3000_PIN_MOSI GPIO_NUM_7
+#define DW3000_PIN_MISO GPIO_NUM_2
+
+#define DW3000_PIN_CS GPIO_NUM_16
+#define DW3000_PIN_RST GPIO_NUM_11
+#define DW3000_PIN_IRQ GPIO_NUM_10
+
+#define DW3000_SPI_FREQ_HZ 2000000
