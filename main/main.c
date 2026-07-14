@@ -36,14 +36,35 @@ void app_main(void)
     };
 
     int32_t rc = dwt_probe(&probe);
-
     ESP_LOGI(TAG, "dwt_probe() = %ld", (long)rc);
 
-    if (rc == DWT_SUCCESS)
+    if (rc != DWT_SUCCESS)
     {
-        uint32_t id = dwt_readdevid();
-        ESP_LOGI(TAG, "DEV_ID = 0x%08lX", (unsigned long)id);
+        ESP_LOGE(TAG, "Probe failed");
+        while (1)
+        {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+        }
     }
+
+    rc = dwt_initialise(DWT_DW_INIT);
+
+    ESP_LOGI(TAG, "dwt_initialise() = %ld", (long)rc);
+
+    if (rc != DWT_SUCCESS)
+    {
+        ESP_LOGE(TAG, "Initialisation failed");
+        while (1)
+        {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+        }
+    }
+
+    ESP_LOGI(TAG, "DW3000 initialised");
+
+    uint32_t devid = dwt_readdevid();
+    ESP_LOGI(TAG, "DEV_ID = 0x%08lX", (unsigned long)devid);
+
 
     while (1)
     {
