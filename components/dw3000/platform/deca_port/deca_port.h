@@ -1,11 +1,17 @@
 #pragma once
 
 #include <stdint.h>
+#include "deca_interface.h"
+#include "deca_device_api.h"
 #include "spi.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+extern dwchip_t g_dw;
+extern struct dwt_spi_s g_dwt_spi;
 
 int32_t readfromspi(
     uint16_t headerLength,

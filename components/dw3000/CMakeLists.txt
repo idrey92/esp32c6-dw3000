@@ -8,16 +8,20 @@ idf_component_register(
         "driver/deca_interface.c"
         "driver/dw3000_device.c"
         "platform/deca_port/deca_port.c"
+        "driver/deca_compat.c"
+        "driver/deca_rsl.c"
 
     INCLUDE_DIRS
         "include"
         "driver"
         "platform/spi"
         "platform/gpio"
+        "platform/deca_port"
         
     REQUIRES
         esp_driver_spi
-        esp_driver_gpio    
+        esp_driver_gpio
+        qmath    
 )
 
 target_compile_options(${COMPONENT_LIB} PRIVATE

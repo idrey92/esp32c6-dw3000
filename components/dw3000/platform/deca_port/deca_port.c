@@ -3,8 +3,14 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "deca_interface.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+
 
 static const char *TAG = "DECA_PORT";
+
+dwchip_t g_dw = {0};
 
 int32_t readfromspi(
     uint16_t headerLength,
@@ -85,3 +91,18 @@ struct dwt_spi_s g_dwt_spi =
     .setslowrate      = spi_set_slow_rate,
     .setfastrate      = spi_set_fast_rate,
 };
+
+
+static portMUX_TYPE dw3000_mux = portMUX_INITIALIZER_UNLOCKED;
+
+decaIrqStatus_t decamutexon(void)
+{
+    taskENTER_CRITICAL(&dw3000_mux);
+    return 0;
+}
+
+void decamutexoff(decaIrqStatus_t s)
+{
+    (void)s;
+    taskEXIT_CRITICAL(&dw3000_mux);
+}
