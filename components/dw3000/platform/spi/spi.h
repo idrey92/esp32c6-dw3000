@@ -17,10 +17,12 @@ esp_err_t dw3000_spi_read(
     size_t header_len,
     uint8_t *body,
     size_t body_len);
-    
+
 esp_err_t dw3000_spi_deinit(void);
 
 esp_err_t dw3000_spi_transfer(
     const uint8_t *tx,
     uint8_t *rx,
     size_t len);
+
+esp_err_t dw3000_spi_set_speed(uint32_t hz);

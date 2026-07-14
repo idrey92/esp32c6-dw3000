@@ -137,3 +137,9 @@ esp_err_t dw3000_spi_read(
 
     return ret;
 }
+
+esp_err_t dw3000_spi_set_speed(uint32_t hz)
+{
+    (void)hz;
+    return ESP_OK;
+}

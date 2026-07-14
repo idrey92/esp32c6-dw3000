@@ -7,16 +7,16 @@
 extern "C" {
 #endif
 
-int readfromspi(
+int32_t readfromspi(
     uint16_t headerLength,
-    const uint8_t *headerBuffer,
-    uint32_t readLength,
+    uint8_t *headerBuffer,
+    uint16_t readLength,
     uint8_t *readBuffer);
 
-int writetospi(
+int32_t writetospi(
     uint16_t headerLength,
     const uint8_t *headerBuffer,
-    uint32_t bodyLength,
+    uint16_t bodyLength,
     const uint8_t *bodyBuffer);
 
 void deca_sleep(unsigned int time_ms);
