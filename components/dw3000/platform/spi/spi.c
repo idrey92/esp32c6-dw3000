@@ -73,3 +73,67 @@ esp_err_t dw3000_spi_deinit(void)
 {
     return ESP_OK;
 }
+
+esp_err_t dw3000_spi_write(
+    const uint8_t *header,
+    size_t header_len,
+    const uint8_t *body,
+    size_t body_len)
+{
+    spi_transaction_t t = {0};
+
+    size_t len = header_len + body_len;
+
+    uint8_t tx[512];
+
+    memcpy(tx, header, header_len);
+
+    if (body_len)
+    {
+        memcpy(tx + header_len, body, body_len);
+    }
+
+    t.length = len * 8;
+    t.tx_buffer = tx;
+
+    dw3000_cs_low();
+
+    esp_err_t ret = spi_device_transmit(s_spi, &t);
+
+    dw3000_cs_high();
+
+    return ret;
+}
+
+esp_err_t dw3000_spi_read(
+    const uint8_t *header,
+    size_t header_len,
+    uint8_t *body,
+    size_t body_len)
+{
+    spi_transaction_t t = {0};
+
+    size_t len = header_len + body_len;
+
+    uint8_t tx[512] = {0};
+    uint8_t rx[512] = {0};
+
+    memcpy(tx, header, header_len);
+
+    t.length = len * 8;
+    t.tx_buffer = tx;
+    t.rx_buffer = rx;
+
+    dw3000_cs_low();
+
+    esp_err_t ret = spi_device_transmit(s_spi, &t);
+
+    dw3000_cs_high();
+
+    if (ret == ESP_OK)
+    {
+        memcpy(body, rx + header_len, body_len);
+    }
+
+    return ret;
+}

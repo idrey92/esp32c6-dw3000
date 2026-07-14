@@ -7,12 +7,14 @@ idf_component_register(
         "platform/gpio/gpio.c"
         "driver/deca_interface.c"
         "driver/dw3000_device.c"
+        "platform/deca_port/deca_port.c"
 
     INCLUDE_DIRS
         "include"
         "driver"
         "platform/spi"
         "platform/gpio"
+        
     REQUIRES
         esp_driver_spi
         esp_driver_gpio    
